@@ -1,42 +1,43 @@
 {
-	"Name": "The Long Road to Empire",
-	"Description": "A five-part single-player campaign built in the classic 0 A.D. scenario style. Establish a foothold, secure the river, break the siege, cross the frontier, and win the final battle.",
-	"Levels": {
-		"awakening": {
-			"Name": "I — A New Dawn",
-			"Map": "scenarios/campaign_test_map.xml",
-			"MapType": "scenario",
-			"Description": "Your people have reached a contested frontier. Establish a sustainable settlement, secure the nearby resources, and prepare the army that will carry the campaign forward."
-		},
-		"river": {
-			"Name": "II — The River Crossing",
-			"Map": "scenarios/battle_for_the_tiber.xml",
-			"MapType": "scenario",
-			"Description": "The enemy controls the river and the approaches beyond it. Build your economy, establish control of the crossings, and break the opposing position.",
-			"Requires": "awakening"
-		},
-		"heartland": {
-			"Name": "III — The Heartland",
-			"Map": "scenarios/arcadia.xml",
-			"MapType": "scenario",
-			"Description": "The road now leads into richer country. Expand carefully, protect your supply lines, and turn your growing settlement into a regional power.",
-			"Requires": "river"
-		},
-		"frontier": {
-			"Name": "IV — The Narrow Bridge",
-			"Map": "scenarios/bridge_demo.xml",
-			"MapType": "scenario",
-			"Description": "A narrow passage is the key to the frontier. Control the approach, deny it to the enemy, and force a way through without wasting your army.",
-			"Requires": "heartland"
-		},
-		"finale": {
-			"Name": "V — The Last Fleet",
-			"Map": "scenarios/Ship Combat Demo.xml",
-			"MapType": "scenario",
-			"Description": "The final resistance has taken to the coast. Assemble the forces needed for the decisive engagement and end the campaign on your terms.",
-			"Requires": "frontier"
-		}
-	},
-	"Order": ["awakening", "river", "heartland", "frontier", "finale"],
-	"ShowUnavailable": true
+  "Name": "The Long Road to Empire",
+  "Description": "A five-part single-player campaign assembled from the project's historical scenario maps. Rebuild in Laconia, fight through Delphi, survive the road east, face Rome in Macedonia, and force your way through the Persian Gates.",
+  "Levels": {
+    "awakening": {
+      "Name": "I — The Spartan Valley",
+      "Map": "scenarios/laconia.xml",
+      "MapType": "scenario",
+      "Description": "Macedonian pressure has reached Laconia. Rebuild your economy, restore your army, and hold the valley before the invaders can overwhelm you."
+    },
+    "delphi": {
+      "Name": "II — The Road to Delphi",
+      "Map": "scenarios/the_massacre_of_delphi.xml",
+      "MapType": "scenario",
+      "Description": "The fighting spreads into central Greece. Secure the approaches to Delphi and defeat the invading force."
+      ,
+      "Requires": "awakening"
+    },
+    "heartland": {
+      "Name": "III — The Heartland of Arcadia",
+      "Map": "scenarios/arcadia.xml",
+      "MapType": "scenario",
+      "Description": "The campaign moves into Arcadia. Expand through difficult terrain, protect your settlements, and destroy the opposing army.",
+      "Requires": "delphi"
+    },
+    "macedonia": {
+      "Name": "IV — The Third Macedonian War",
+      "Map": "scenarios/third_macedonian_war.xml",
+      "MapType": "scenario",
+      "Description": "Rome has entered Macedonia. Command through the decisive confrontation and break the enemy's hold over the region.",
+      "Requires": "heartland"
+    },
+    "finale": {
+      "Name": "V — The Persian Gates",
+      "Map": "scenarios/the_persian_gates.xml",
+      "MapType": "scenario",
+      "Description": "The final march leads east. Force the mountain pass, defeat the defenders, and open the road beyond the Gates.",
+      "Requires": "macedonia"
+    }
+  },
+  "Order": ["awakening", "delphi", "heartland", "macedonia", "finale"],
+  "ShowUnavailable": true
 }
