@@ -34,8 +34,9 @@ jobs:
         run: |
           set -eux
           ./0ad-base.AppImage --appimage-extract >/dev/null
-          test -f squashfs-root/usr/data/mods/public/campaigns/the_long_road_to_empire.json
-          cp binaries/data/mods/public/campaigns/the_long_road_to_empire.json             squashfs-root/usr/data/mods/public/campaigns/the_long_road_to_empire.json
+          mkdir -p squashfs-root/usr/data/mods/public/campaigns
+          cp binaries/data/mods/public/campaigns/the_long_road_to_empire.json \
+            squashfs-root/usr/data/mods/public/campaigns/the_long_road_to_empire.json
           printf '%s\n' "1000-B.C test build" > squashfs-root/usr/data/mods/public/1000-B.C-test-build.txt
 
       - name: Download AppImageTool
