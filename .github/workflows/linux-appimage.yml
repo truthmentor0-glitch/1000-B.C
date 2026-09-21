@@ -50,7 +50,7 @@ jobs:
       - name: Build AppImage
         run: |
           set -eux
-          ./appimagetool.AppImage squashfs-root 1000-B.C-The-Long-Road-to-Empire-test-x86_64.AppImage
+          ./appimagetool.AppImage --no-appstream squashfs-root 1000-B.C-The-Long-Road-to-Empire-test-x86_64.AppImage
 
       - name: Upload test AppImage
         uses: actions/upload-artifact@v4
