@@ -1,0 +1,60 @@
+name: Build Linux test AppImage
+
+on:
+  push:
+    branches: ["master"]
+    paths:
+      - "binaries/data/mods/public/campaigns/**"
+      - "binaries/data/mods/public/maps/scenarios/**"
+      - ".github/workflows/linux-appimage.yml"
+  workflow_dispatch:
+
+jobs:
+  appimage:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install packaging tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl jq squashfs-tools
+
+      - name: Download upstream 0 A.D. AppImage
+        run: |
+          set -eux
+          URL=$(curl -fsSL https://api.github.com/repos/0ad-matters/0ad-appimage/releases/latest |
+            jq -r '.assets[] | select(.name == "0ad-0.27.1-x86_64.AppImage") | .browser_download_url')
+          test -n "$URL"
+          curl -L --fail --retry 3 "$URL" -o 0ad-base.AppImage
+          chmod +x 0ad-base.AppImage
+
+      - name: Overlay campaign data
+        run: |
+          set -eux
+          ./0ad-base.AppImage --appimage-extract >/dev/null
+          test -f squashfs-root/usr/data/mods/public/campaigns/the_long_road_to_empire.json
+          cp binaries/data/mods/public/campaigns/the_long_road_to_empire.json             squashfs-root/usr/data/mods/public/campaigns/the_long_road_to_empire.json
+          printf '%s\n' "1000-B.C test build" > squashfs-root/usr/data/mods/public/1000-B.C-test-build.txt
+
+      - name: Download AppImageTool
+        run: |
+          set -eux
+          URL=$(curl -fsSL https://api.github.com/repos/AppImage/appimagetool/releases/latest |
+            jq -r '.assets[] | select(.name == "appimagetool-x86_64.AppImage") | .browser_download_url')
+          test -n "$URL"
+          curl -L --fail --retry 3 "$URL" -o appimagetool.AppImage
+          chmod +x appimagetool.AppImage
+
+      - name: Build AppImage
+        run: |
+          set -eux
+          ./appimagetool.AppImage squashfs-root 1000-B.C-The-Long-Road-to-Empire-test-x86_64.AppImage
+
+      - name: Upload test AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: 1000-B.C-linux-AppImage
+          path: 1000-B.C-The-Long-Road-to-Empire-test-x86_64.AppImage
+          retention-days: 14
